@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 class Pic {
   String author;
   String url;
@@ -52,7 +52,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+      ),
+    );
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Pinterest',
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -70,7 +76,7 @@ class MyApp extends StatelessWidget {
               ),
               Container(
                 width: 160.0,
-                child: Image.asset('assets/pinterest-logo.png'),
+                child: Image.asset('assets/images/pinterest-logo.png'),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(

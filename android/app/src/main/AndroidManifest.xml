@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="pinterest_clone"
+        android:label="Pinterest"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
