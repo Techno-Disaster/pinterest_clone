@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
+
 class Pic {
   String author;
   String url;
@@ -12,17 +12,11 @@ class Pic {
   Pic({this.author, this.url});
 
   toJson() {
-    return {
-      "author": this.author,
-      "url": this.url
-    };
+    return {"author": this.author, "url": this.url};
   }
-  
+
   factory Pic.fromJson(json) {
-    return Pic(
-      author: json['author'],
-      url: json['download_url']
-    );
+    return Pic(author: json['author'], url: json['download_url']);
   }
 }
 
@@ -36,8 +30,7 @@ Future<List<Pic>> getPics() async {
       pics.add(pic);
     });
     return pics;
-  } 
-  else {
+  } else {
     throw Exception("Failed to load pics");
   }
 }
@@ -45,7 +38,6 @@ Future<List<Pic>> getPics() async {
 void main() => runApp(MyApp(pics: getPics()));
 
 class MyApp extends StatelessWidget {
-
   final Future<List<Pic>> pics;
 
   MyApp({this.pics});
@@ -78,13 +70,9 @@ class MyApp extends StatelessWidget {
                 width: 160.0,
                 child: Image.asset('assets/images/pinterest-logo.png'),
                 decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 3.0,
-                      color: Colors.red[800]
-                    )
-                  )
-                ),
+                    border: Border(
+                        bottom:
+                            BorderSide(width: 3.0, color: Colors.red[800]))),
               ),
               Icon(
                 Icons.account_circle,
@@ -95,39 +83,30 @@ class MyApp extends StatelessWidget {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 8.0
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
           color: Colors.grey[400],
           child: FutureBuilder(
             future: pics,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-
                 return StaggeredGridView.countBuilder(
                   crossAxisCount: 4,
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-                    return PicCard(
-                      item: snapshot.data[index]
-                    );
+                    return PicCard(item: snapshot.data[index]);
                   },
                   staggeredTileBuilder: (index) {
-                    return StaggeredTile.count(2, index.isEven ? 2: 5);
+                    return StaggeredTile.count(2, index.isEven ? 2 : 5);
                   },
                   mainAxisSpacing: 4.0,
                   crossAxisSpacing: 4.0,
                 );
-              }
-              else if (snapshot.hasError) {
+              } else if (snapshot.hasError) {
                 return Text(snapshot.error);
               }
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(
-                    Colors.red[800]
-                  ),
+                  valueColor: AlwaysStoppedAnimation(Colors.red[800]),
                 ),
               );
             },
@@ -142,9 +121,9 @@ class PicCard extends StatelessWidget {
   final Pic item;
   final _random = Random();
 
-  PicCard ({this.item});
+  PicCard({this.item});
 
-  int randomInt (int min, int max) => min * _random.nextInt(max-min);
+  int randomInt(int min, int max) => min * _random.nextInt(max - min);
 
   @override
   Widget build(BuildContext context) {
@@ -157,14 +136,9 @@ class PicCard extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(2.5)
-                  ),
-                  image: DecorationImage(
-                    image: NetworkImage(item.url),
-                    fit: BoxFit.cover
-                  )
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(2.5)),
+                    image: DecorationImage(
+                        image: NetworkImage(item.url), fit: BoxFit.cover)),
               ),
             ),
             Container(
@@ -174,10 +148,11 @@ class PicCard extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    item.author,
-                  style: TextStyle(color: Colors.grey[800], fontSize: 16.0,
-                  )),
+                  Text(item.author,
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: 16.0,
+                      )),
                 ],
               ),
             )
